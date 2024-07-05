@@ -1,18 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NinjaController : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public float moveSpeed = 5f;
+    public float jumpForce = 10f;
+    private Rigidbody2D rb;
+    private bool isGrounded = true;
+
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        Move();
+        Jump();
+    }
+
+    void Move()
+    {
+        float moveInput = Input.GetAxis("Horizontal");
+        rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+
+        if (moveInput > 0)
+        {
+            transform.localScale = new Vector3(1, 1, 1);
+        }
+        else if (moveInput < 0)
+        {
+            transform.localScale = new Vector3(-1, 1, 1);
+        }
+    }
+
+    void Jump()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            isGrounded = false;
+        }
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
     }
 }
