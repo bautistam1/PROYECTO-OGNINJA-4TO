@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LDWeapon : MonoBehaviour
+public class FlotaFlota : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
